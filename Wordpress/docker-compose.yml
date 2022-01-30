@@ -1,0 +1,51 @@
+## Humberto HP
+## 30/01/2022
+## Necesotias tener instalado el trafik en un contenedor antes de levantar este contenedor
+
+version: '3.7'
+
+services:
+  db:
+    image: mariadb
+    container_name: wp-db-wordpressite  ## Changue Name conteiner
+    volumes:
+      - db-data:/var/lib/mysql
+    networks:
+      - default
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: password1  ## Changue Password 
+      MYSQL_DATABASE: wordpress           
+      MYSQL_USER: root                  ## Changue User 
+      MYSQL_PASSWORD: password1     ## Changue User 
+
+  wordpress:
+    depends_on:
+      - db
+    image: wordpress:latest
+    container_name: wordpress-wordpressite ## Changue Name conteiner
+    environment:
+      WORDPRESS_DB_HOST: db:3306
+      WORDPRESS_DB_NAME: wordpress
+      WORDPRESS_DB_USER: root
+      WORDPRESS_DB_PASSWORD: password1 ## Use Password database
+    volumes:
+      - ./wp-data:/var/www/html/wp-content
+    networks:
+      - proxy
+      - default
+    restart: always
+    labels:
+      - "traefik.enable=true"
+      - "traefik.docker.network=proxy"
+      - "traefik.http.routers.wordpress-kb2ctisecure.entrypoints=websecure"
+      - "traefik.http.routers.wordpress-kb2cti-secure.rule=Host(`mydomain.com`)" ##changue domain
+      # - "traefik.http.routers.wordpress-secure.service=wordpress-service"
+      # - "traefik.http.services.wordpress-service.loadbalancer.server.port=80"
+
+volumes:
+  db-data:
+    name: wp-db-data-wordpressite ## Changue Name volumens
+networks:
+  proxy:
+    external: true
