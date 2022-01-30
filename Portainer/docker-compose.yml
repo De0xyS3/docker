@@ -1,0 +1,26 @@
+version: "3"
+
+services:
+  portainer:
+    image: portainer/portainer-ce:latest
+    container_name: portainer
+    restart: unless-stopped
+    security_opt:
+      - no-new-privileges:true
+    networks:
+      - proxy
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - ./portainer-data:/data
+    labels:
+      - "traefik.enable=true"
+      - "traefik.docker.network=proxy"
+      - "traefik.http.routers.portainer-secure.entrypoints=websecure"
+      - "traefik.http.routers.portainer-secure.rule=Host(`mydomain.com`)" ## changue for your domain
+      - "traefik.http.routers.portainer-secure.service=portainer"
+      - "traefik.http.services.portainer.loadbalancer.server.port=9000"
+
+networks:
+  proxy:
+    external: true
