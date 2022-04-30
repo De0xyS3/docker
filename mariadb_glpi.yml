@@ -1,0 +1,22 @@
+version: '3.7'
+
+services:
+  db2:
+    image: mariadb
+    container_name: db2_glpi  ## Changue Name conteiner
+    networks:
+      - network_glpi
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: password1  ## Changue Password
+      MYSQL_DATABASE: wordpress
+      MYSQL_USER: root                  ## Changue User
+      MYSQL_PASSWORD: password1     ## Changue User
+
+networks:
+  network_glpi:
+    external: true
+##apt-get update && apt-get install -y iputils-ping
+##apt-get update && apt-get install net-tools
+
+
