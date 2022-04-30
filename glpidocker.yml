@@ -1,0 +1,24 @@
+version: "3.8"
+
+services:
+#MariaDB Container
+  mariadb:
+    image: mariadb:10.7
+    container_name: mariadb
+    hostname: mariadb
+    environment:
+      - MARIADB_ROOT_PASSWORD=password
+      - MARIADB_DATABASE=glpidb
+      - MARIADB_USER=glpi_user
+      - MARIADB_PASSWORD=glpi
+
+#GLPI Container
+  glpi:
+    image: 20608617184/glpiv10
+    container_name : glpi
+    hostname: glpi
+    environment:
+      - VERSION_GLPI=9.5.6
+    ports:
+      - 80:80
+      - 443:443
