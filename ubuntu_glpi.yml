@@ -1,0 +1,20 @@
+version: "3"
+
+services:
+  glpi:
+    image: ubuntu
+    container_name: glpi
+    restart: on-failure
+    networks:
+      - network_glpi
+    ports:
+      - 80:80
+      - 443:443
+    command: ["sleep","infinity"]
+    volumes:
+      - /mnt/glpi:/mnt/glpi:ro
+
+networks:
+  network_glpi:
+    external: true
+
