@@ -1,0 +1,17 @@
+version: "2"
+services:
+  filecloud:
+    image: filecloud/fileclouddocker
+    container_name: filecloud
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.filecloud.rule=Host(`mycloud.dbtechdemo.com`)
+      - traefik.http.routers.filecloud.entrypoints=web
+      - traefik.http.services.filecloud.loadbalancer.server.port=80
+    networks:
+      - web
+    volumes:
+      - /data/db:/var/lib/mongodb
+      - /data/solr:/opt/solr-5.3.1/server/solr/fccore
+      - /srv/dev-disk-by-label-Files/FileCloud:/cloudstorage
+    restart: unless-stopped
