@@ -1,0 +1,9 @@
+version: "3.9"
+services:
+  CloudFlare:
+    container_name: cloudflared-tunnel-nexcloud
+    image: cloudflare/cloudflared
+    restart: unless-stopped
+    command: tunnel run
+    environment:
+      - TUNNEL_TOKEN=xxx
