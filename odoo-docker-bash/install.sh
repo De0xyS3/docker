@@ -86,8 +86,6 @@ read port_num
 echo "Ingresa el nombre del contenedor a utilizar:"
 read container_name
 
-set -x
-
 if [ ! -d "/root/docker/$container_name" ]; then
   #Create the directory
   mkdir -p /root/docker/$container_name
