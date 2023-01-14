@@ -1,5 +1,5 @@
 #!/bin/bash
-
+sudo apt-get install figlet -y
 echo "Comprobando si Docker está instalado..."
 if ! [ -x "$(command -v docker)" ]; then
   echo 'Docker is not installed. Installing...'
