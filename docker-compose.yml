@@ -1,0 +1,31 @@
+version: '3'
+services:
+  iredmail:
+    image: iredmail/iredmail:latest
+    environment:
+      - DOMAIN=mydomain.com
+      - HOSTNAME=mail.mydomain.com
+      - USE_SSL=yes
+      - PHP_TZ=America/Mexico_City
+      - SOGO_DEBUG=0
+    ports:
+      - 25:25
+      - 80:80
+      - 443:443
+      - 110:110
+      - 143:143
+      - 587:587
+      - 993:993
+      - 995:995
+    volumes:
+      - ./data/iredmail:/var/lib/mysql
+      - ./data/ssl:/etc/ssl/private
+  db:
+    image: mariadb:10.5
+    environment:
+      - MYSQL_ROOT_PASSWORD=mysecretpassword
+      - MYSQL_DATABASE=iredmail
+      - MYSQL_USER=iredmail
+      - MYSQL_PASSWORD=iredmail
+    volumes:
+      - ./data/mariadb:/var/lib/mysql
