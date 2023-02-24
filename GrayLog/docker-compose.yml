@@ -79,3 +79,68 @@ networks:
 
 # Entrar como root y aplicar permisos al contenedor graylog_graylog_1
 # chown -R 1100:1100 /usr/share/graylog/data/journal/
+
+# Log in using the username admin and SHA2 password(StrongPassw0rd) set in the YAML.
+
+# In the file, replace:
+
+# GRAYLOG_PASSWORD_SECRET with your own password which must be at least 16 characters
+# GRAYLOG_ROOT_PASSWORD_SHA2 with a SHA2 password obtained using the command:
+# echo -n "Enter Password: " && head -1 </dev/stdin | tr -d '\n' | sha256sum | cut -d" " -f1
+
+# GRAYLOG_HTTP_EXTERNAL_URI with the IP address of your server.
+
+
+# 3. Create Persistent volumes
+# In order to persist the data, you will use external volumes to store the data. In this guide, we have already mapped the volumes in the YAML file. Create the 3 volumes for MongoDB, Elasticsearch, and Graylog as below:
+
+# sudo mkdir /mongo_data
+# sudo mkdir /es_data
+# sudo mkdir /graylog_journal
+
+# Set the right permissions:
+# sudo chmod 777 -R /mongo_data
+# sudo chmod 777 -R /es_data
+# sudo chmod 777 -R /graylog_journal
+
+
+# 4. Run the Graylog Server in Docker Containers
+# With the container provisioned, we can now spin it easily using the command:
+
+# docker-compose up -d
+
+# Once all the images have been pulled and containers started, check the status as below:
+
+# docker ps
+
+# If you have a firewall enabled, allow the Graylog service port through it.
+
+# sudo ufw allow 9000/tcp
+
+# 5. Access the Graylog Web UI
+# Now open the Graylog web interface using the URL http://IP_address:9000.
+
+# Log in using the username admin and SHA2 password(StrongPassw0rd) set in the YAML.
+
+# On the dashboard, let’s create the first input to get logs by navigating to the systems tab and selecting input.
+
+# Now search for Raw/Plaintext TCP and click launch new input
+
+# Once launched, a pop-up window will appear as below. You only need to change the name for the input, port(1514), and select the node, or “Global” for the location for the input. Leave the other details as they are.
+
+# Save the file and try sending a plain text message to the Graylog Raw/Plaintext TCP input on port 1514.
+
+# echo 'First log message' | nc localhost 1514
+
+# ##OR from another server##
+
+# echo 'First log message' | nc 192.168.205.4 1514
+
+
+# On the running Raw/Plaintext Input, show received messages
+
+# The received message should be displayed
+
+# Conclusion
+# That is it!
+# We have triumphantly walked through how to run the Graylog Server in Docker Containers. Now you can monitor and access logs on several servers with ease. I hope this was significant to you.
