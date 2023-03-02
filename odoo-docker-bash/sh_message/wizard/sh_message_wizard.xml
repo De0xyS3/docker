@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+<data>	
+	
+	
+	<record id="sh_message_wizard" model="ir.ui.view">
+		<field name="name">sh.message.wizard</field>
+		<field name="model">sh.message.wizard</field>
+		<field name="arch" type="xml">
+			<form string="Message">
+				<h2 class='title_message' attrs="{ 'invisible': [('title','=',False)] }"><field name="title" readonly='1'/></h2>
+				<br/>
+				<field name="type_message" invisible='1'/>
+				<div style='display: inline-flex;'>
+					<div class='image_message'>								
+						<img src='/sh_message/static/src/img/info_icon.jpeg' 
+							attrs="{ 'invisible': [('type_message','!=','info')] }"
+							alt='Image for message' width='80' height="80"/>
+						<img src='/sh_message/static/src/img/error_icon.jpeg' 
+							attrs="{ 'invisible': [('type_message','!=','error')] }"
+							alt='Image for message' width='80' height="80"/>
+					</div>
+					<div class='body_message' style='margin: 10px;'>
+						<field name="name"/>			
+					</div>
+				</div>				
+				<footer>
+					<button string="Aceptar" class="btn-primary" special="cancel" />
+				</footer>							
+			</form>
+		</field>	
+	</record>
+
+</data>
+</odoo>
