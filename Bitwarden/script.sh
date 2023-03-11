@@ -8,6 +8,7 @@ read -s -p "SMTP_PASSWORD: " smtppassword
 echo 
 read -p "Ingrese el nombre que definira al configurar el rclone: " conexion 
 read -p "Ingrese puerto que sera para exponer el servicio vaultwarden: " port
+read -p "Ingrese contraseña para cifrado de ZIP FILE BACKUP" cifrado
 echo
 
 # Generar el token aleatorio y almacenarlo en la variable de entorno ADMIN_TOKEN
@@ -62,7 +63,7 @@ services:
         RCLONE_GLOBAL_FLAG: ''
         CRON: '5 * * * *'
         ZIP_ENABLE: 'TRUE'
-        ZIP_PASSWORD: 'r0m4n0s'
+        ZIP_PASSWORD: '$cifrado'
         ZIP_TYPE: 'zip'
         BACKUP_FILE_DATE_SUFFIX: ''
         BACKUP_KEEP_DAYS: 0
