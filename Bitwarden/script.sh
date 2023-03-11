@@ -43,7 +43,7 @@ services:
       - ./ssl:/ssl/
       - vaultwarden-data:/data/
     environment:
-      - SIGNUPS_ALLOWED: 'false'
+    # - SIGNUPS_ALLOWED=false
       - ADMIN_TOKEN=$admin_token
       - ROCKET_TLS={certs="/ssl/apache-selfsigned.crt",key="/ssl/apache-selfsigned.key"}
       - SMTP_HOST=$smtphost
